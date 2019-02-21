@@ -1,0 +1,39 @@
+// ==========================================================================
+// Form Mixins
+// ==========================================================================
+
+// Here we set a variable assuming that default and module settings
+// are not set globally. If they have been previously been defined,
+// the following variable will be overriden and will be set to `true`.
+$imported-global-settings: false !default;
+
+@if ($imported-global-settings == false) {
+  @warn "Oops! Have you included global settings files?";
+}
+
+$input-border-color:            $color-ash--light !default;
+$input-border-color--active:    $color-blue !default;
+$input-border-color--error:     $color-pink !default;
+
+@mixin input-transition {
+  transition: border .2s ease-in-out,
+              box-shadow .2s ease-in-out;
+}
+
+@mixin inp-border {
+  border: 1px solid $input-border-color;
+}
+
+@mixin inp-focus-border {
+  border-color: $input-border-color--active;
+  box-shadow: 0 0 4px 0 $input-border-color--active;
+}
+
+@mixin inp-error-border {
+  border-color: $input-border-color--error;
+}
+
+@mixin inp-error-focus-border {
+  border-color: $input-border-color--error;
+  box-shadow: 0 0 4px 0 $input-border-color--error;
+}

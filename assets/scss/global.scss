@@ -1,0 +1,81 @@
+@import "variables";
+
+//
+// App Level Transition Class
+// ==========================================================================
+.c-fade-enter,
+.c-fade-leave-to {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.c-fade-enter-active {
+  transition: all .2s ease-out;
+}
+
+.c-fade-leave-active {
+  transition: all .25s ease-out;
+}
+
+//
+// Generic
+// ==========================================================================
+@import "arin/3-generic/generic.normalize";
+@import "arin/3-generic/generic.reset";
+@import "arin/3-generic/generic.box-sizing";
+@import "arin/3-generic/generic.shared";
+
+
+
+
+//
+// Elements
+// ==========================================================================
+@import "arin/4-elements/elements.page";
+@import "arin/4-elements/elements.headings";
+@import "arin/4-elements/elements.links";
+@import "arin/4-elements/elements.images";
+
+
+
+
+//
+// Objects
+// ==========================================================================
+@import "arin/5-objects/objects.container";
+@import "arin/5-objects/objects.layout";
+@import "arin/5-objects/objects.media";
+@import "arin/5-objects/objects.flag";
+@import "arin/5-objects/objects.list";
+@import "arin/5-objects/objects.box";
+@import "arin/5-objects/objects.ratio";
+@import "arin/5-objects/objects.split";
+
+
+
+
+//
+// COMPONENTS
+// ==========================================================================
+$enable-btn--primary: true;
+$enable-btn--block: true;
+@import "6-components/components.buttons";
+@import "6-components/components.forms";
+// @import "arin/6-components/components.example-tables";
+
+
+
+
+//
+// Utilities
+// ==========================================================================
+@import "arin/7-utilities/utilities.clearfix";
+@import "arin/7-utilities/utilities.width";
+@import "arin/7-utilities/utilities.float";
+@import "arin/7-utilities/utilities.text-alignment";
+@import "arin/7-utilities/utilities.text-sizing";
+@import "arin/7-utilities/utilities.text-transform";
+@import "arin/7-utilities/utilities.text-weight";
+@import "arin/7-utilities/utilities.spacing";
+@import "arin/7-utilities/utilities.visibility";
+@import "arin/7-utilities/utilities.print";

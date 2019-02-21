@@ -1,0 +1,399 @@
+// ==========================================================================
+// Form Base
+// ==========================================================================
+
+// Here we set a variable assuming that default and module settings
+// are not set globally. If they have been previously been defined,
+// the following variable will be overriden and will be set to `true`.
+$imported-global-settings: false !default;
+
+@if ($imported-global-settings == false) {
+  @warn "Oops! Have you included global settings files?";
+}
+
+$input-color:                    $color-black !default;
+$input-color--disabled:          $color-ash !default;
+$input-bg:                       $color-white !default;
+$input-bg--disabled:             $color-sand--dark !default;
+$input-border-color:             $color-ash--light !default;
+$input-border-color--active:     $color-blue !default;
+$input-border-color--error:      $color-pink !default;
+$input-border-width:             1px !default;
+$input-border-radius:            $global-border-radius !default;
+$input-height:                   36px !default;
+$input-height--small:            30px !default;
+$input-height--large:            42px !default;
+$input-horizontal-padding:       halve($global-spacing-unit) !default;
+
+$checkradio-dimesion:            20px;
+$checkradio-bg:                  $color-white !default;
+$checkradio-bg--disabled:        $color-ash !default;
+
+// private variables
+$input-vertical-padding:         halve($input-height - $global-line-height) - $input-border-width;
+$input-vertical-padding--small:  halve($input-height--small - $global-line-height) - $input-border-width;
+$input-vertical-padding--large:  halve($input-height--large - $global-line-height) - $input-border-width;
+
+//scss-lint:disable VendorPrefix, PseudoElement
+.c-input-label {
+  display: block;
+  margin-bottom: rem-calc(quarter($global-spacing-unit));
+  font-size: rem-calc($global-font-size);
+  line-height: $global-line-height;
+}
+
+.c-input {
+  @include input-transition;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: rem-calc($input-vertical-padding $input-horizontal-padding);
+
+  font-size: rem-calc($global-font-size);
+  line-height: $global-line-height;
+
+  color: $input-color;
+  background: $input-bg;
+  border: $input-border-width solid $input-border-color;
+
+  border-radius: $input-border-radius;
+  outline: none;
+  resize: vertical;
+
+  box-sizing: border-box;
+  -webkit-appearance: none;
+
+  &:focus {
+    @include inp-focus-border;
+  }
+
+  &:invalid,
+  &.is-invalid {
+    @include inp-error-border;
+
+    &:focus {
+      @include inp-error-focus-border;
+    }
+  }
+}
+
+.c-input--small {
+  padding: rem-calc($input-vertical-padding--small $input-horizontal-padding);
+}
+
+.c-input--large {
+  padding: rem-calc($input-vertical-padding--large $input-horizontal-padding);
+}
+
+.c-input[disabled],
+.c-input[readonly],
+.c-input--disabled {
+  color: $input-color--disabled;
+  background-color: $input-bg--disabled;
+}
+
+.c-input[disabled] {
+  cursor: not-allowed;
+}
+
+.c-select {
+  @include input-transition;
+
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: rem-calc($input-vertical-padding $input-horizontal-padding);
+
+  font-size: rem-calc($global-font-size);
+  line-height: $global-line-height;
+
+  color: $input-color;
+  border: $input-border-width solid $input-border-color;
+  background: $input-bg;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAYCAYAAAC8/X7cAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADQSURBVFiF1c+7ccMwFEXBZS0oUqGgzE2+WqzE9li2KOIrkncGAZDg7BIRF3w45/ICJ0XklNJt+b6dDJFTSjdYfr+eBPETzx8Ah0c8xPMEwGER/+JZAXA4xNN4XgA4DGI1ng0AuyNexlMAYDfEZjyFAN6OKIqnAsDbEMXxVAKYjqiKpwHANER1PI0AhiOa4ukAMAzRHE8ngG5EVzwDADQjuuMZBKAaMSSegQCKEcPiGQxgEzE0ngkAVhHD46cuIi4R8fl1rnv3NC0ickTkmX/cAeicgKu/i7a4AAAAAElFTkSuQmCC");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px 6px;
+
+  border-radius: $input-border-radius;
+  outline: none;
+
+  box-sizing: border-box;
+  -webkit-appearance: none;
+
+  &:focus {
+    @include inp-focus-border;
+  }
+
+  &:invalid,
+  &.is-invalid {
+    @include inp-error-border;
+
+    &:focus {
+      @include inp-error-focus-border;
+    }
+  }
+}
+
+.c-select--small {
+  padding: rem-calc($input-vertical-padding--small $input-horizontal-padding);
+}
+
+.c-select--large {
+  padding: rem-calc($input-vertical-padding--large $input-horizontal-padding);
+}
+
+.c-select[disabled],
+.c-select[readonly],
+.c-select--disabled {
+  color: $input-color--disabled;
+  background-color: $input-bg--disabled;
+}
+
+.c-select[disabled] {
+  cursor: not-allowed;
+}
+
+// components style
+.c-checkbox,
+.c-radio {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+}
+
+// INFO: I am explicit selecting :checked and :not(checked) for this reason:
+// For Browser not supporting :checked my ruleset won't apply,
+// so the native input will be displayed.
+
+.c-checkbox__input:checked,
+.c-checkbox__input:not(checked),
+.c-radio__input:checked,
+.c-radio__input:not(checked) {
+  opacity: 0;
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.c-checkbox__input:checked + .c-checkbox__label,
+.c-checkbox__input:not(checked) + .c-checkbox__label,
+.c-radio__input:checked + .c-radio__label,
+.c-radio__input:not(checked)+ .c-radio__label {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: rem-calc($global-spacing-unit--large);
+  padding-right: rem-calc(halve($global-spacing-unit--large));
+}
+
+.c-checkbox__input:not(checked) + .c-checkbox__label:before,
+.c-radio__input:not(checked) + .c-radio__label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+
+  display: inline-block;
+  height: rem-calc($checkradio-dimesion);
+  width: rem-calc($checkradio-dimesion);
+  vertical-align: middle;
+
+  border-radius: $input-border-radius;
+  border: 1px solid $input-border-color;
+
+  background: $checkradio-bg;
+
+  transition: all .2s ease-out;
+}
+
+.c-radio__input:not(checked) + .c-radio__label:before {
+  border-radius: 50%;
+}
+
+.c-checkbox__input:checked + .c-checkbox__label:before {
+  vertical-align: middle;
+  content: "✓";
+  font-size: rem-calc($global-font-size - 2px);
+  line-height: rem-calc($checkradio-dimesion);
+  text-indent: 1px;
+  color: $checkradio-bg;
+  background: $input-border-color--active;
+  text-align: center;
+}
+
+.c-radio__input:checked + .c-radio__label:before {
+  background: $checkradio-bg;
+  border-color: $input-border-color--active;
+  box-shadow: inset 0 0 0 4px $input-border-color--active;
+}
+
+.c-checkbox:hover .c-checkbox__label:before,
+.c-radio:hover .c-radio__label:before {
+  border: 1px solid $input-border-color--active;
+}
+
+.c-checkbox__input[disabled] + .c-checkbox__label,
+.c-radio__input[disabled] + .c-radio__label {
+  color: $input-color--disabled;
+  cursor: not-allowed;
+}
+
+.c-checkbox__input[disabled] + .c-checkbox__label:before,
+.c-radio__input[disabled] + .c-radio__label:before {
+  background-color: $checkradio-bg--disabled;
+  border-color: $input-border-color;
+  cursor: not-allowed;
+}
+
+.c-radio__input[disabled]:checked + .c-radio__label:before {
+  background: $checkradio-bg;
+  box-shadow: inset 0 0 0 4px $checkradio-bg--disabled;
+}
+
+.c-checkbox:hover .c-checkbox__input[disabled] + .c-checkbox__label:before,
+.c-radio:hover .c-radio__input[disabled] + .c-radio__label:before {
+  border: 1px solid $input-border-color;
+}
+
+
+// radio & checkbox input for overlay filter only
+.c-checkbox--filter,
+.c-radio--filter {
+  width: 100%;
+}
+
+.c-checkbox--filter > .c-checkbox__label {
+  width: 100% !important;
+  text-align: left !important;
+  padding-right: rem-calc($global-spacing-unit--large) !important;
+  padding-left: 0 !important;
+}
+
+.c-radio--filter > .c-radio__label {
+  width: 100% !important;
+  text-align: left !important;
+  padding-right: rem-calc($global-spacing-unit--large) !important;
+  padding-left: 0 !important;
+}
+
+.c-checkbox--filter > .c-checkbox__input:not(checked) + .c-checkbox__label:before,
+.c-radio--filter > .c-radio__input:not(checked) + .c-radio__label:before {
+  left: auto;
+  right: 0;
+}
+
+
+::-webkit-input-placeholder {
+  font-family: $global-font-family;
+  letter-spacing: 0;
+  color: $input-color--disabled;
+}
+// Firefox 18-
+:-moz-placeholder {
+  font-family: $global-font-family;
+  color: $input-color--disabled;
+}
+// Firefox 19+
+::-moz-placeholder {
+  font-family: $global-font-family;
+  color: $input-color--disabled;
+}
+:-ms-input-placeholder {
+  font-family: $global-font-family;
+  color: $input-color--disabled;
+}
+::-webkit-file-upload-button {
+  font: inherit;
+  -webkit-appearance: button;
+}
+
+
+//scss-lint:enable VendorPrefix, PseudoElement
+
+// Checkbox and radio markup example
+// %div.c-checkbox
+//   %input.c-checkbox__input{id:"checkbox1", type:"checkbox", value:"1", name:"checkbox"}
+//   %label.c-checkbox__label{for:"checkbox1"} Checkbox
+
+// %label.c-checkbox.c-checkbox--disabled
+//   %input.c-checkbox__input{type:"checkbox", value:"2", name:"checkbox", checked: true}
+//   %span.c-checkbox__label Checkbox checked
+
+// %label.c-checkbox.c-checkbox--disabled
+//   %input.c-checkbox__input{type:"checkbox", value:"3", name:"checkbox", disabled:true}
+//   %span.c-checkbox__label Checkbox disabled
+
+// %label.c-checkbox.c-checkbox--disabled
+//   %input.c-checkbox__input{type:"checkbox", value:"4", name:"checkbox", checked: true, disabled: true}
+//   %span.c-checkbox__label Checkbox checked and disabled
+
+// %label.c-radio
+//   %input.c-radio__input{type:"radio", value:"1", name:"radio1"}
+//   %span.c-radio__label Radio default
+
+// %label.c-radio.c-radio--disabled
+//   %input.c-radio__input{type:"radio", value:"2", name:"radio1", checked: true}
+//   %span.c-radio__label Radio checked
+
+// %label.c-radio.c-radio--disabled
+//   %input.c-radio__input{type:"radio", value:"3", name:"radio", disabled: true}
+//   %span.c-radio__label Radio disabled
+
+// %label.c-radio.c-radio--disabled
+//   %input.c-radio__input{type:"radio", value:"4", name:"radio", checked: true, disabled: true}
+//   %span.c-radio__label Radio checked and disabled
+
+.c-input-search {
+  position: relative;
+}
+
+.c-input-search__input {
+  padding-right: rem-calc(40);
+
+  .c-input-search--rev & {
+    padding-right: rem-calc($input-horizontal-padding);
+    padding-left: rem-calc(40);
+  }
+}
+
+.c-input-search__btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  width: rem-calc(40);
+  height: 100%;
+  padding-left: 0;
+  padding-right: rem-calc(halve($global-spacing-unit));
+  border: 0;
+
+  &,
+  &:hover {
+    color: $color-ash;
+    background: none;
+  }
+
+  > * {
+    font-size: 18px;
+  }
+
+  .c-input-search--rev & {
+    right: auto;
+    left: 0;
+    padding-right: 0;
+    padding-left: rem-calc(halve($global-spacing-unit));
+  }
+}
+
+.c-input-search__icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
